@@ -113,10 +113,6 @@ ${1:${VISUAL}}   \label{$0}
 \end{equation}
 endsnippet
 
-snippet nt "number" bA
-\nt \label{$0}
-endsnippet
-
 snippet desc "description" bA
 \begin{description}
 	\item[$1] $0
@@ -248,7 +244,7 @@ endsnippet
 # GENERAL MATHS
 ###
 context "math()"
-snippet nt "numbering" iA
+snippet nt "numbering" i
 \nt \label{$1}$0
 endsnippet
 
@@ -257,6 +253,7 @@ snippet op "Math boldface" iA
 \mathbf{$1}$0
 endsnippet
 
+context "math()"
 snippet == "equals" iA
 &=$1 \\\
 endsnippet
@@ -879,6 +876,11 @@ snippet PP "pi" iA
 \Pi
 endsnippet
 
+context "math()"
+snippet ze "pi" iA
+\zeta
+endsnippet
+
 ###
 # BEAMER
 ###
@@ -980,7 +982,7 @@ $0
 
 
 %\newpage
-%\bibliography{~/Documents/Latex/bibmaster.bib}
+%\bibliography{/home/carneca/Documents/Latex/bibmaster.bib}
 \end{document}
 endsnippet
 
@@ -989,7 +991,7 @@ endsnippet
 ###
 snippet bib "bibliography" bA
 \newpage
-\bibliography{bibmaster.bib}
+\bibliography{/home/carneca/Documents/Latex/bibmaster.bib}
 endsnippet
 
 ###

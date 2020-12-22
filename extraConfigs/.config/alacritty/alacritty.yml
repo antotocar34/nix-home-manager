@@ -6,19 +6,10 @@
 # loaded earlier with those loaded later in the chain. The file itself will
 # always be loaded last.
 # import:
-#   - /path/to/alacritty.yml
+#   - /home/carneca/.config/alacritty/alacritty.yml
 
-# Any items in the `env` entry below will be added as
-# environment variables. Some entries may override variables
-# set by alacritty itself.
 env:
   TERM: alacritty
-  # TERM variable
-  #
-  # This value is used to set the `$TERM` environment variable for
-  # each instance of Alacritty. If it is not present, alacritty will
-  # check the local terminfo database and use `alacritty` if it is
-  # available, otherwise `xterm-256color` is used.
 
 window:
   # Window dimensions (changes require restart)
@@ -43,8 +34,8 @@ window:
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
   padding:
-    x: 2
-    y: 2
+    x: 1
+    y: 0
 
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: true
@@ -108,7 +99,8 @@ font:
     # - (Linux/BSD) monospace
     #   - (macOS) Menlo
     #   - (Windows) Consolas
-    family: monospace
+    # family: CaskaydiaCove Nerd Font Mono
+    family: CaskaydiaCove Nerd Font Mono
 
     # The `style` can be specified to pick a specific face.
     style: Regular
@@ -147,7 +139,7 @@ font:
     #style: Bold Italic
 
   # Point size
-  size: 17.0
+  size: 16
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -161,6 +153,7 @@ font:
   # right, increasing `y` moves the glyph upward.
   #glyph_offset:
   #  x: 0
+
   #  y: 0
 
 # If `true`, bold text is drawn using the bright color variants.
@@ -263,29 +256,15 @@ font:
   #save_to_clipboard: false
 
 cursor:
-  # Cursor style
-  #
-  # Values for `style`:
-  # - ▇ Block
-  #   - _ Underline
-  #   - | Beam
   style: Block
-
-  # Vi mode cursor style
-  #
-  # If the vi mode cursor style is `None` or not specified, it will fall back to
-  # the style of the active value of the normal cursor.
-  #
-  # See `cursor.style` for available options.
-  #vi_mode_style: None
 
   # If this is `true`, the cursor will be rendered as a hollow box when the
   # window is not focused.
-  #unfocused_hollow: true
+  unfocused_hollow: true
 
   # Thickness of the cursor relative to the cell width as floating point number
   # from `0.0` to `1.0`.
-  #thickness: 0.15
+  # thickness: 0.15
 
 # Live config reload (changes require restart)
 #live_config_reload: true
@@ -320,7 +299,7 @@ cursor:
   # If this is `true`, the cursor is temporarily hidden when typing.
   #hide_when_typing: false
 
-  #url:
+  url:
     # URL launcher
     #
     # This program is executed when clicking on a text which is recognized as a
@@ -332,8 +311,8 @@ cursor:
     #   - (macOS) open
     #   - (Linux/BSD) xdg-open
     #   - (Windows) explorer
-    #launcher:
-    #  program: xdg-open
+    launcher:
+      program: chromium
     #  args: []
 
     # URL modifiers
@@ -425,19 +404,6 @@ cursor:
 #   - ScrollLineDown
 #   - ScrollToTop
 #   - ScrollToBottom
-#   - ClearHistory
-#       Remove the terminal's scrollback history.
-#   - Hide
-#       Hide the Alacritty window.
-#   - Minimize
-#       Minimize the Alacritty window.
-#   - Quit
-#       Quit Alacritty.
-#   - ToggleFullscreen
-#   - SpawnNewInstance
-#       Spawn a new instance of Alacritty.
-#   - ClearLogNotice
-#       Clear Alacritty's UI warning and error notice.
 #   - ClearSelection
 #       Remove the active selection.
 #   - ReceiveChar
@@ -556,7 +522,7 @@ cursor:
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
-#key_bindings:
+key_bindings:
   #- { key: Paste,                                action: Paste          }
   #- { key: Copy,                                 action: Copy           }
   #- { key: L,         mods: Control,             action: ClearLogNotice }
@@ -621,7 +587,7 @@ cursor:
   #- { key: F,              mods: Control|Shift,           action: SearchForward    }
   #- { key: B,              mods: Control|Shift,           action: SearchBackward   }
   #- { key: C,              mods: Control|Shift, mode: Vi, action: ClearSelection   }
-  #- { key: Insert,         mods: Shift,                   action: PasteSelection   }
+  - { key: O,         mods: Control,                   action: PasteSelection   }
   #- { key: Key0,           mods: Control,                 action: ResetFontSize    }
   #- { key: Equals,         mods: Control,                 action: IncreaseFontSize }
   #- { key: Plus,           mods: Control,                 action: IncreaseFontSize }
@@ -653,6 +619,7 @@ cursor:
   # Print all received window events.
   #print_events: false
 
+# Nord colorscheme
 colors:
   primary:
     background: '#2e3440'

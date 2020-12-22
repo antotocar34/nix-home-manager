@@ -1,11 +1,28 @@
-let mapleader =" " 
+"        _
+" __   _(_)_ __ ___  _ __ ___
+" \ \ / / | '_ ` _ \| '__/ __|
+"  \ V /| | | | | | | | | (__
+"   \_/ |_|_| |_| |_|_|  \___|
+"
+
+
+let mapleader =" "
 let home = $HOME
+
+""INDEX
+
+"PLUGINS
+"SETTINGS
+"COLOURS
+"FILE SPECIFIC SETTINGS
+"COC
 
 ""
 "PLUGINS
 ""
+call plug#begin('~/.vim/plugged')
 
-" Plug 'lervag/vimtex'
+Plug 'lervag/vimtex'
 let g:tex_flavor='latex'
 let g:vimtex_view_method='zathura'
 let g:vimtex_quickfix_mode=0
@@ -28,29 +45,31 @@ let g:vimtex_compiler_latexmk = {
     \ ],
     \}
 
-" Plug 'SirVer/Ultisnips'
+Plug 'SirVer/Ultisnips'
 let g:UltiSnipsExpandTrigger = '<tab>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
-let g:UltiSnipsSnippetDirectories = [home . '/.config/nixpkgs/extraConfigs/my-snippets']
+let g:UltiSnipsSnippetDirectories = [home . '/.vim/my-snippets']
 
-" Plug 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 
-" Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-unimpaired'
 
-" Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-commentary'
 
-" Plug 'LnL7/vim-nix'
+Plug 'tpope/vim-fugitive'
 
-" Plug 'junegunn/fzf.vim'
+Plug 'LnL7/vim-nix'
+
+Plug 'junegunn/fzf.vim'
 let g:fzf_buffers_jump = 0
 
-" Plug 'arcticicestudio/nord-vim'
+Plug 'arcticicestudio/nord-vim'
 
-" Plug 'preservim/nerdtree'
+Plug 'preservim/nerdtree'
 let g:NERDTreeQuitOnOpen = 1
 
-" Plug 'neovimhaskell/haskell-vim'
+Plug 'neovimhaskell/haskell-vim'
 let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
 let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
 let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
@@ -59,25 +78,38 @@ let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
 let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
 let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
 
-" Plug 'psf/black'
-let g:black_linelength = 79
+Plug 'psf/black'
+let g:black_linelength = 81
 let g:black_skip_string_normalization = 1
 
-" Plug 'neoclide/coc.nvim'
+Plug 'neoclide/coc.nvim'
+let g:coc_config_home="~/.vim/" " Change when transferring over to nix?
 autocmd FileType tex let g:coc_start_at_startup = 0
-autocmd FileType python let b:coc_root_patterns =
-                \ ['.git', 'src']
+autocmd FileType python let b:coc_root_patterns = ['Pipfile']
 " autocmd FileType haskell let b:coc_root_patterns =
 "                 \ [????]
 
+Plug 'vim-airline/vim-airline' 
+" Works well with CaskaydiaCove Nerf Font Mono
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline_highlighting_cache = 1
+let g:airline_powerline_fonts = 1
 
-"""
-" SETTINGS
-"""
+
+Plug 'vim-airline/vim-airline-themes'
+
+call plug#end()
+
+""""
+"" SETTINGS
+""""
 
 " syntax enable
 filetype plugin on
+
 set nocompatible
+" Take out any cursor line
+set nocursorline
 " Automatically changes working directory to current file.
 set autochdir
 " Highlight and jump to search result as it is happening
@@ -89,7 +121,7 @@ set hidden
 set spelllang=en
 set encoding=utf-8
 set number relativenumber
-set background=dark
+" set background=light
 filetype plugin indent on
 " show existing tab with 4 spaces width
 set tabstop=4
@@ -99,15 +131,20 @@ set shiftwidth=4
 set expandtab
 " Shows what you type in command mode.
 set showcmd
+"
+set cmdheight=1
+
 set wildmode=longest,list,full
 autocmd fileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 set splitbelow splitright
 set linebreak
-" augroup remember_folds
-"     autocmd!
-"     au BufWinLeave ?* mkview 1
-"     au BufWinEnter ?* silent! loadview 1
-" augroup END
+
+augroup remember_folds
+    autocmd!
+    au BufWinLeave ?* mkview 1
+    au BufWinEnter ?* silent! loadview 1
+augroup END
+
 " Changes directory to current file directory
 autocmd BufEnter * silent! lcd %:p:h
 set autoread
@@ -122,14 +159,11 @@ map <C-s>  <Esc>:update <CR>
 "quit
 nnoremap <C-q> :q!<CR>
 
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
 nnoremap  <C-j> :tabprevious<CR>
 nnoremap  <C-k> :tabnext<CR>
 " nnoremap  <C-t>q :tabclose<CR>
 command R !clear&&./%
+" What does this do?
 command TW :%s/ \+$//
 
 nnoremap <C-p> "+p
@@ -142,27 +176,35 @@ nnoremap ¬ :source ~/.vimrc<CR>
 imap <C-e>  <C-o>zz
 " fzf searc
 map <leader>f :BLines <CR>
-command! -bang Files call fzf#vim#files('~/', <bang>0)
 command! -bang HFiles call fzf#vim#files('~/', <bang>0)
-nnoremap <leader>d ggv/noind<CR>$zf``
+
 " This is a spell check from gilles castel blog
 " https://castel.dev/post/lecture-notes-1/
 inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
-command! -nargs=1 SS let @/ = '\V'.escape(<q-args>, '\')	
-inoremap <C-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root.'/figures/"'<CR><CR>:w<CR>
-nnoremap <C-f> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
+" Toggle spell checking
+map <leader>o :set invspell<CR>
+
+" No idea
+command! -nargs=1 SS let @/ = '\V'.escape(<q-args>, '\')
+
 nnoremap - :NERDTree <CR>
-nnoremap <leader>i :!clear&&git 
+" TODO command to automatically backup latex documents.
+nnoremap <leader>i :Git 
+nnoremap <leader>b :Git add % <bar> :Git commit -m "backup"<CR>
+
+
+" Buffer remaps
 nnoremap <leader>l :bn<CR>
 nnoremap <leader>h :bp<CR>
 nnoremap <leader>q :bd<CR>
+
+" FZF remaps
 nnoremap <leader>e :HFiles<CR>
 nnoremap <leader>a :Files<CR>
-map <leader>o :set invspell<CR>
-nnoremap <buffer> <F10> :!clear&&texcount % <cr>
+
+
 nnoremap <leader>t :vert term <CR>
 nnoremap <leader>y :term <CR>
-nnoremap <leader>s :VimtexTocOpen <CR>
 nnoremap + :sh <CR>
 " Make terminal quitting easier
 tnoremap <C-d> <C-\><C-n>:q!<CR>
@@ -176,42 +218,28 @@ augroup my-colors
     autocmd ColorScheme * hi SpellBad ctermbg=NONE
 augroup END
 
-hi SpellBad ctermfg=174 ctermbg=NONE 
-hi Conceal ctermfg=NONE ctermbg=NONE		
-hi LineNR ctermfg=109
-hi SpellCap  ctermfg=95
-hi SpellRare ctermfg=95
-hi SpellLocal ctermfg=95
-hi Delimiter ctermfg=183
-hi texMathZoneES  ctermbg=NONE
-hi texDocZone  ctermbg=NONE
-hi texSectionZone  ctermbg=NONE	
-hi texSection  ctermbg=NONE
-hi texSubSectionZone  ctermbg=NONE
-hi texStatement  ctermbg=NONE
-hi Delimiter  ctermbg=NONE "syntax colour of brackets and the like.
-hi texMatcher  ctermbg=NONE
-hi TexMathOper ctermfg=15 "syntax colour of math operators like the _
-hi TexMathzoneW ctermfg=80	
-hi texMathMatcher  ctermfg=80
-hi texMathZoneES  ctermfg=80
-hi texMathSymbol ctermfg=1 	
-hi texMathZoneX ctermfg=80	
-hi texGreek ctermfg=1
-hi texBeginEnd ctermfg=167
-hi pythonNumber ctermfg=114
-
 augroup nord-overrides
     autocmd!
     autocmd ColorScheme nord highlight TexMathzoneW ctermfg=15
-    autocmd ColorScheme nord highlight texMathSymbol ctermfg=1 	
-    autocmd ColorScheme nord highlight texGreek ctermfg=1 	
-    autocmd ColorScheme nord highlight Delimiter ctermfg=5 	
+    autocmd ColorScheme nord highlight texMathSymbol ctermfg=1
+    autocmd ColorScheme nord highlight texPartArgTitle ctermfg=15
+    " Highlights greek symbols as red
+    autocmd ColorScheme nord highlight texGreek ctermfg=1
+    " $ purple in latex inline mode
+    autocmd ColorScheme nord highlight Delimiter ctermfg=5
 augroup END
 
 colorscheme nord
 
 highlight ColorColumn ctermbg=magenta
+
+
+"  _____ _ _        ____                  _  __ _
+" |  ___(_) | ___  / ___| _ __   ___  ___(_)/ _(_) ___
+" | |_  | | |/ _ \ \___ \| '_ \ / _ \/ __| | |_| |/ __|
+" |  _| | | |  __/  ___) | |_) |  __/ (__| |  _| | (__
+" |_|   |_|_|\___| |____/| .__/ \___|\___|_|_| |_|\___|
+"                       |_|
 
 """
 " PYTHON Specific Stuff
@@ -227,11 +255,17 @@ autocmd FileType python nnoremap + :vert term ipython -i %<CR>
 """
 " TEX Specific Stuff
 """
+nnoremap <buffer> <F10> :VimtexCountWords<cr>
 autocmd FileType tex nnoremap <buffer> <leader>c I% <esc>
 autocmd FileType tex setlocal spell
+" Fold preamble in tex
+autocmd FileType tex nnoremap <leader>d ggv/noind<CR>$zf``
+autocmd FileType tex nnoremap <leader>s :VimtexTocOpen <CR>
 autocmd FileType tex set nocindent nosmartindent noautoindent
+autocmd FileType tex inoremap <C-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root.'/figures/"'<CR><CR>:w<CR>
+autocmd FileType tex nnoremap <C-f> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
 " Make the files readable
-autocmd FileType tex set textwidth=95
+" autocmd FileType tex set textwidth=95
 augroup vimtex_config
     au!
     au User VimtexEventQuit call vimtex#compiler#clean(0)
@@ -249,7 +283,7 @@ autocmd FileType haskell nnoremap <buffer> <F9> :exec '!clear;ghci' shellescape(
 """
 " STATA Specific Stuff
 """
-" autocmd FileType stata nnoremap <F9> :exec '!clear; !xstata-mp do %' shellescape(@%, 1)<CR>
+autocmd FileType stata nnoremap <buffer> <F9> :exec '!clear;xstata-mp do' shellescape(@%, 1)<cr><cr>
 " autocmd FileType stata vmap <C-S-x> :<C-U>call RunDoLines()<CR><CR>
 
 """
@@ -257,21 +291,13 @@ autocmd FileType haskell nnoremap <buffer> <F9> :exec '!clear;ghci' shellescape(
 """
 autocmd FileType sh nnoremap <buffer> <F9> :exec '!clear;./%' shellescape(@%, 1)<cr>
 
-"set noshowmode  " to get rid of thing like --INSERT--
-"set noshowcmd  " to get rid of display of last command
-"set shortmess+=F  " to get rid of the file name displayed in the command line bar
-
-
 """
 " COC stuff
 """
-
-
-
 let output = system("which node")
 if v:shell_error == 0
     " coc here
-    set cmdheight=2
+    " set cmdheight=2
     set updatetime=300
 
     " Use K to show documentation in preview window.
@@ -287,7 +313,7 @@ if v:shell_error == 0
       endif
     endfunction
 
-    nnoremap <silent> gd <Plug>(coc-definition)
+    " nnoremap <silent> gd <Plug>(coc-definition)
     nnoremap <silent> gy <Plug>(coc-type-definition)
     nnoremap <silent> gi <Plug>(coc-implementation)
     nnoremap <silent> gr <Plug>(coc-references)
@@ -309,3 +335,7 @@ if v:shell_error == 0
 
     nnoremap <leader>u :call Toggle_coc()<CR>
 endif
+
+" set noshowmode  " to get rid of thing like --INSERT--
+" set noshowcmd  " to get rid of display of last command
+" set shortmess+=F  " to get rid of the file name displayed in the command line bar
