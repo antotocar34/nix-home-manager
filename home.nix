@@ -33,7 +33,7 @@ dotconfig = "./extraConfigs/.config" ;
 		FZF_DEFAULT_COMMAND=''
 			ag --hidden --ignore .stack --ignore .cabal --ignore .cache --ignore .git --ignore .vim --ignore .local -l -g ""
 			'' ;
-
+        QT_XCB_GL_INTEGRATION= "none";
 	} ;
 
 	home.packages = with pkgs;  [
@@ -77,6 +77,8 @@ dotconfig = "./extraConfigs/.config" ;
 		enable = true ;
 # settings = builtins.readFile ./extraConfigs/alacritty.yml ;
 	} ; 
+
+
 
     # programs.neovim = {
     #   enable = true ;
